@@ -1,0 +1,241 @@
+version: '2.0'
+config:
+  store_entities_as_slots: true
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- greet:
+    use_entities: true
+- goodbye:
+    use_entities: true
+- affirm:
+    use_entities: true
+- deny:
+    use_entities: true
+- inform:
+    use_entities: true
+- mood_great:
+    use_entities: true
+- mood_unhappy:
+    use_entities: true
+- bot_challenge:
+    use_entities: true
+- givetime:
+    use_entities: true
+- ask_ability:
+    use_entities: true
+- list_cars:
+    use_entities: true
+- give_time:
+    use_entities: true
+- give_country:
+    use_entities: true
+- out_of_scope:
+    use_entities: true
+- nlu_fallback:
+    use_entities: true
+- request_restaurant:
+    use_entities: true
+- request_names:
+    use_entities: true
+- request_csharp:
+    use_entities: true
+- tell_name:
+    use_entities: true
+- explain:
+    use_entities: true
+- tell_programing_language:
+    use_entities:
+    - language
+- tell_application_type:
+    use_entities:
+    - application_type
+- tell_learning_time:
+    use_entities:
+    - learning_time
+- my_name:
+    use_entities:
+    - full_name
+- mobile_number:
+    use_entities:
+    - phone_number
+- ask_programing_language:
+    use_entities: true
+- ask_programing_language_details:
+    use_entities: true
+entities:
+- language
+- application_type
+- learning_time
+- first_name
+- last_name
+- full_name
+- phone_number
+slots:
+  language:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  application_type:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  learning_time:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  first_name:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  last_name:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  full_name:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  phone_number:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  requested_slot:
+    type: rasa.shared.core.slots.CategoricalSlot
+    initial_value:
+    - language
+    - application_type
+    - learning_time
+    auto_fill: true
+    influence_conversation: true
+    values: []
+responses:
+  utter_greet:
+  - text: Hey! How are you?
+  - text: Hello! How was a day?
+  - text: Have a nice day!!!
+  - text: Ngày mới tốt lành!!!
+  utter_cheer_up:
+  - image: https://i.imgur.com/nGF1K8f.jpg
+    text: 'Here is something to cheer you up:'
+  utter_did_that_help:
+  - text: Did that help you?
+  - text: Can i help you?
+  - text: Chào bạn, tôi có thể giúp gì cho bạn
+  utter_happy:
+  - text: Great, carry on!
+  - text: Yeah, welcome
+  - text: Tuyệt vời!!!
+  utter_goodbye:
+  - text: Bye
+  - text: See you soon!!!!
+  - text: See you later!!!!
+  - text: See you again!!!
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  - text: Tôi là người máy, chào bạn.
+  utter_out_of_scope:
+  - text: Unfortunately we are unable to answer this question at this time, please contact us via our telephone help line
+  - text: I'm sorry, I didn't understand that, please contact us via our telephone help line
+  utter_fall_back:
+  - text: Unfortunately we are unable to answer this question at this time, please contact us via our telephone help line
+  - text: I'm sorry, I didn't understand that, please contact us via our telephone help line
+  utter_please_rephrase:
+  - text: I'm sorry, I didn't understand that.
+  utter_default:
+  - text: Sorry I didn't get that. Can you rephrase?
+  utter_ask_programing_introduce:
+  - text: 'Yep! I can help you find some of tutorial to learn programing language if you answer some of questions below:'
+  utter_ask_language:
+  - text: Which programming language do you want to learn?
+  utter_ask_application_type:
+  - text: |-
+      What application do you want to build?
+      - Web
+      - Desktop
+      - Games
+  utter_ask_learning_time:
+  - text: How long do you want to study? (month)
+  utter_ask_first_name:
+  - text: What is your first name?
+  utter_submit:
+  - text: All done!"
+  utter_slots_values:
+  - text: |-
+      I am going to run a {Language} tutorials search using the following parameters:
+       - Language: {Language}
+       - Application type: {Application_Type}
+       - Learning time: {Learning_Time}
+       This is your link tutorial: https://www.w3schools.com/cs/
+  utter_slots_values_name:
+  - text: I will remember your name is {first_name} {last_name}!!!
+  utter_explain_language:
+  - text: You can learn C#(C Sharp), Java, PHP, Python,...
+  utter_explain_programing_language:
+  - text: 'And programming languages are the tools we use to write instructions for computers to follow. Computers “think” in binary — strings of 1s and 0s. Programming languages allow us to translate the 1s and 0s into something that humans can understand and write. A programming language is made up of a series of symbols that serves as a bridge that allow humans to translate our thoughts into instructions computers can understand. Some popular programing languages are: C#, C++, PHP, Python, Java,...'
+  utter_explain_application_type:
+  - text: 'Some of application is: Website, Desktop application, Mobile application, Games...'
+  utter_ask_full_name:
+  - text: What is your full name?
+  utter_ask_phone_number:
+  - text: What is your phone number?
+  utter_details_thanks:
+  - text: |-
+      Thanks for providing the given details 
+      Name: {Name},
+      Mobile Number: {Mobile_number}
+#  Start conversation
+  utter_welcome:
+    - text: Hi there! What can I help you with today?
+actions:
+- utter_greet
+- utter_happy
+- utter_goodbye
+- utter_iamabot
+- action_recommend
+- action_custom_car
+- action_show_time
+- action_show_country
+- utter_out_of_scope
+- utter_fall_back
+- utter_please_rephrase
+- utter_default
+- utter_explain_application_type
+- utter_explain_language
+- utter_explain_programing_language
+- action_submit_personal_form
+- action_submit_programing_language_form
+- action_answer_programing_language
+- utter_welcome
+forms:
+  csharp_form:
+    application_type:
+    - entity: application_type
+      type: from_entity
+    language:
+    - entity: language
+      type: from_entity
+    learning_time:
+    - entity: learning_time
+      type: from_entity
+  name_form:
+    first_name:
+    - type: from_text
+    last_name:
+    - type: from_text
+  user_details_form:
+    full_name:
+    - entity: full_name
+      type: from_entity
+    phone_number:
+    - entity: phone_number
+      type: from_entity
+e2e_actions: []

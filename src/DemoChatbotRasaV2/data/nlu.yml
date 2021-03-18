@@ -1,0 +1,269 @@
+version: "2.0"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+
+- intent: goodbye
+  examples: |
+    - good afternoon
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: ask_ability
+  examples: |
+    - what you can do?
+    - your features?
+    - your functions?
+
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+
+- intent: inform
+  examples: |
+    - [C#](language) language
+    - how bout [C#](language) language
+    - what about [C#](language) language
+    - uh how about [C#](language) language
+    - um [C#](language)
+    - im looking for [C#](language) language
+    - id like [C#](language) language
+    - for two people
+    - 2 month
+    - for three month
+    - just one month
+    - learn in two month
+    - 2 please
+    - thrre month
+
+- intent: mood_great
+  examples: |
+    - perfect
+    - great
+    - amazing
+    - feeling like a king
+    - wonderful
+    - I am feeling very good
+    - I am great
+    - I am amazing
+    - I am going to save the world
+    - super stoked
+    - extremely good
+    - so so perfect
+    - so good
+    - so perfect
+
+- intent: mood_unhappy
+  examples: |
+    - my day was horrible
+    - I am sad
+    - I don't feel very well
+    - I am disappointed
+    - super sad
+    - I'm so sad
+    - sad
+    - very sad
+    - unhappy
+    - not good
+    - not very good
+    - extremly sad
+    - so saad
+    - so sad
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+
+#- intent: car
+#  examples: |
+#    - how much does a [Mercedes]{"entity":"name","value":"Mercedes"} car cost?
+#    - how much does a [Audi]{"entity":"name","value":"Audi"} car cost?
+#    - how much does a [Skovar]{"entity":"name","value":"Skovar"} car cost?
+#    - how much does a [Volvo]{"entity":"name","value":"Volvo"} car cost?
+#    - how much does a [Bentley]{"entity":"name","value":"Bentley"} car cost?
+#    - how much does a [Citroen]{"entity":"name","value":"Citroen"} car cost?
+#    - how much does a [Hummer]{"entity":"name","value":"Hummer"} car cost?
+#    - how much does a [Volkswagen]{"entity":"name","value":"Volkswagen"} car cost?
+
+- intent: list_cars
+  examples: |
+    - list of cars
+    - cars price
+    - cars catalog
+
+- intent: give_time
+  examples: |
+    - what time
+    - tell me the time
+    - got the time
+    - what time is it
+
+- intent: give_country
+  examples: |
+    - what is vietnam
+    - information of vietnam
+    - population of vietnam
+    - region of vietnam
+    - phone number of vietnam
+
+- intent: out_of_scope
+  examples: |
+    - I want to book trips
+    - What is Ocean
+    - Who is Precident of United State
+
+# Intent for Programing Languages Topic
+
+- intent: request_csharp
+  examples: |
+    - I want to know [C#](language) [C-sharp](language)
+    - I want to learn [C#](language) [C-sharp](language)
+    - Learn [C#](language) [C-sharp](language)
+    - Study [C#](language) [C-sharp](language)
+    - Learning programing language
+    - Study programing language
+    - Begin developer with [C#](language) [C-sharp](language)
+    - I want to begin a coder
+    - I want to begin programer engineer
+
+- intent: request_csharp
+  examples: |
+    - To be a programer engineer
+    - Learn to build applications
+    - Learning programing language
+    - Study programing language
+    - Begin developer
+    - I want to begin a coder
+    - I want to begin programer engineer
+
+- intent: tell_programing_language
+  examples: |
+    - I want to know [C#](language) [C-sharp](language)
+    - I want to learn [C#](language) [C-sharp](language)
+    - Learn [C#](language) [C-sharp](language)
+    - Study [C#](language) [C-sharp](language)
+    - Begin developer with [C#](language) [C-sharp](language)
+
+- intent: tell_application_type
+  examples: |
+    - I want to build [Web Application]{"entity":"application_type","value":"Web"} application
+    - Build my [Web Application]{"entity":"application_type","value":"Web"} application
+    - Product my [Web]{"entity":"application_type","value":"Web"} application
+    - Make my [Mobile]{"entity":"application_type","value":"Mobile"} application
+    - Design my [Web]{"entity":"application_type","value":"Web"} application
+    - Product my [Desktop]{"entity":"application_type","value":"Desktop"} application
+
+- intent: tell_learning_time
+  examples: |
+    - learn in [1](learning_time) month
+    - learn in [one](learning_time) month
+    - Study in [2](learning_time) month
+    - Practice in [two](learning_time) month
+    - Over [1](learning_time) month
+    - Less than [2](learning_time) month
+
+- intent: ask_programing_language
+  examples: |
+    - What is a programming language?
+    - Programming language mean?
+    - I don't know programing language
+    - I do not know programing language
+    - don't understand programing language
+    - need to know programing language
+    - more information about programing language
+
+- intent: ask_programing_language_details
+  examples: |
+    - What is [C#](language)?
+    - [C#](language) mean?
+    - I don't know [C#](language)
+    - I do not know [Java](language)
+    - need to know [PHP](language)
+    - more information about [C#](language)
+
+
+# Intent for Provide your Information
+
+- intent: request_names
+  examples: |
+    - give name
+    - my name
+
+- intent: explain
+  examples: |
+    - Why do you need to know that?
+    - Why do you want to do this?
+
+- intent: tell_name
+  examples: |
+    - What is your name?
+    - What's your name?
+    - Tell me your name?
+    - What order call you?
+    - What should i call you?
+
+- intent: my_name
+  examples: |
+    - My name is [Toan]{"entity":"full_name","value":"Toan"}
+    - my name is [Hai]{"entity":"full_name","value":"Hai"}
+    - My name is [Quan]{"entity":"full_name","value":"Quan"}
+    - [Toan]{"entity":"full_name","value":"Toan"} is my name
+    - people call me [Toan]{"entity":"full_name","value":"Toan"}
+
+- intent: mobile_number
+  examples: |
+    - my number is [8209829808](phone_number)
+    - [8209829808](phone_number)
+    - [8209829808](phone_number) is my number
+    - my nobile number is [8209829808](phone_number)
+
+- lookup: cars
+  examples: |
+    - Mercedes
+    - Audi
+    - Skovar
+    - Volvo
+    - Bentley
+    - Citroen
+    - Hummer
+    - Volkswagen

@@ -1,0 +1,40 @@
+<head>
+  <link rel="stylesheet" href="https://npm-scalableminds.s3.eu-central-1.amazonaws.com/@scalableminds/chatroom@master/dist/Chatroom.css" />
+</head>
+<body>
+  <div class="chat-container"></div>
+
+  <script src="https://npm-scalableminds.s3.eu-central-1.amazonaws.com/@scalableminds/chatroom@master/dist/Chatroom.js"/></script>
+  <script type="text/javascript">
+    var chatroom = new window.Chatroom({
+      host: "http://localhost:5005",
+      title: "Rasa Assistant",
+      container: document.querySelector(".chat-container"),
+      welcomeMessage: "I'm chatbot powered by Rasa. How can i help you?",
+      speechRecognition: "en-US",
+      voiceLang: "en-US"
+    });
+    chatroom.openChat();
+  </script>
+
+{#  <script src="https://npm-scalableminds.s3.eu-central-1.amazonaws.com/@scalableminds/chatroom@master/dist/Chatroom.js"/></script>#}
+{#  <script type="text/javascript">#}
+{#      async function newEntry() {#}
+{#          if (document.getElementById("chatbox").value != "") {#}
+{#            lastUserMessage = document.getElementById("chatbox").value;#}
+{#            document.getElementById("chatbox").value = "";#}
+{#            messages.push(lastUserMessage);#}
+{#            var res = await $.get("http://10.100.0.63:5000/get/" + lastUserMessage).done(function(data){#}
+{#              //console.log(data);#}
+{#            });#}
+{#            messages.push("<b>" + botName + ":</b> " + res);#}
+{#            Speech(res);#}
+{#            for (var i = 1; i < 8; i++) {#}
+{#              if (messages[messages.length - i])#}
+{#                document.getElementById("chatlog" + i).innerHTML = messages[messages.length - i];#}
+{#            }#}
+{#          }#}
+{#        }#}
+{#  </script>#}
+
+</body>

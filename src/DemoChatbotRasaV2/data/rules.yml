@@ -1,0 +1,93 @@
+version: "2.0"
+
+rules:
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+#- rule: Welcome user
+#  conversation_start: true
+#  steps:
+#  - intent: greet
+#  - action: utter_welcome
+
+#- rule: out-of-scope
+#  steps:
+#  - intent: out_of_scope
+#  - action: utter_out_of_scope
+- rule: Ask user when he don't understand
+  steps:
+  - intent: nlu_fallback
+  - action: utter_please_rephrase
+
+- rule: activate c sharp form
+  steps:
+  - intent: request_csharp   # intent that triggers form activation
+  - action: utter_ask_programing_introduce
+  - action: csharp_form      # run the form
+  - active_loop: csharp_form # this form is active
+
+- rule: submit form
+  condition:
+  - active_loop: csharp_form   # this form must be active
+  steps:
+  - action: csharp_form      # run the form
+  - active_loop: null       # the form is no longer active because it has been filled
+  - slot_was_set:
+      - requested_slot: null
+  - action: action_submit_programing_language_form         # action to take after the form is complete
+#  - action: utter_slots_values   # action to take after the form is complete
+
+- rule: To explain programing language
+  steps:
+    - intent: ask_programing_language
+    - action: utter_explain_programing_language
+
+- rule: To explain programing language details
+  steps:
+    - intent: ask_programing_language_details
+#    - slot_was_set:
+#        - language: "C#"
+    - action: action_answer_programing_language
+
+- rule: Activate form name
+  steps:
+    - intent: request_names
+    - action: name_form
+    - active_loop: name_form
+
+- rule: submit name form
+  condition:
+  - active_loop: name_form
+  steps:
+  - action: name_form
+  - active_loop: null
+  - slot_was_set:
+      - requested_slot: null
+  - action: utter_submit
+  - action: utter_slots_values_name
+
+- rule: Activate Personal Form
+  steps:
+    - intent: tell_name
+    - action: utter_iamabot
+    - action: user_details_form
+    - active_loop: user_details_form
+
+- rule: submit Personal form
+  condition:
+  - active_loop: user_details_form
+  steps:
+  - action: user_details_form
+  - active_loop: null
+  - slot_was_set:
+      - requested_slot: null
+  - action: action_submit_personal_form
+
