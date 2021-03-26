@@ -64,6 +64,22 @@ intents:
     use_entities: true
 - ask_programing_language_details:
     use_entities: true
+- ask_contact:
+    use_entities: true
+- ask_products:
+    use_entities: true
+- ask_help:
+    use_entities: true
+- ask_about_you:
+    use_entities: true
+- ask_fire_protection:
+    use_entities: true
+- ask_fire_safety_and_protection_equipment:
+    use_entities: true
+- ask_fire_safety_and_protection_equipment_items:
+    use_entities: true
+- rating_conversation:
+    use_entities: true
 entities:
 - language
 - application_type
@@ -192,18 +208,15 @@ responses:
       Thanks for providing the given details 
       Name: {Name},
       Mobile Number: {Mobile_number}
-#  Start conversation
   utter_welcome:
-    - text: Hi there! What can I help you with today?
+  - text: Hi there! What can I help you with today?
+  utter_thanks_rating:
+    - text: Thank you for rating 👌👌👌, See you later 😘😘😘
 actions:
 - utter_greet
 - utter_happy
 - utter_goodbye
 - utter_iamabot
-- action_recommend
-- action_custom_car
-- action_show_time
-- action_show_country
 - utter_out_of_scope
 - utter_fall_back
 - utter_please_rephrase
@@ -211,10 +224,23 @@ actions:
 - utter_explain_application_type
 - utter_explain_language
 - utter_explain_programing_language
+- utter_welcome
+- action_recommend
+- action_custom_car
+- action_show_time
+- action_show_country
 - action_submit_personal_form
 - action_submit_programing_language_form
 - action_answer_programing_language
-- utter_welcome
+- action_answer_contact
+- action_answer_products
+- action_answer_help
+- action_answer_about_you
+- action_opening_message
+- action_answer_fire_protection
+- action_answer_fire_safety_and_protection_equipments
+- action_answer_view_protection_equipment_items
+- action_goodbye
 forms:
   csharp_form:
     application_type:
