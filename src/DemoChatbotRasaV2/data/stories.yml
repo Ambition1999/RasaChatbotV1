@@ -32,16 +32,14 @@ stories:
 - story: greeting
   steps:
   - intent: greet
-  - action: action_opening_message
+  - action: utter_greet
   - intent: mood_great
   - action: utter_happy
 
 - story: goodbyeee
   steps:
   - intent: goodbye
-  - action: action_goodbye
-  - intent: rating_conversation
-  - action: utter_thanks_rating
+  - action: utter_goodbye
 
 - story: bot challengeee
   steps:
@@ -67,21 +65,21 @@ stories:
 - story: path of list car
   steps:
   - intent: greet
-  - action: action_opening_message
+  - action: utter_greet
   - intent: list_cars
   - action: action_custom_car
 
 - story: path about time
   steps:
   - intent: greet
-  - action: action_opening_message
+  - action: utter_greet
   - intent: give_time
   - action: action_show_time
 
 - story: path about country
   steps:
   - intent: greet
-  - action: action_opening_message
+  - action: utter_greet
   - intent: give_country
   - action: action_show_country
 
@@ -106,17 +104,3 @@ stories:
 #  - intent: explain
 #  - action: utter_explain_application_type
 #  - action: csharp_form
-
-- story: path about country
-  steps:
-#  - intent: ask_help
-#  - action: action_answer_help
-  - intent: ask_about_you
-  - action: action_answer_about_you
-  - intent: ask_fire_protection
-  - action: action_answer_fire_protection
-  - intent: ask_fire_safety_and_protection_equipment
-  - action: action_answer_fire_safety_and_protection_equipments
-  - intent: ask_fire_safety_and_protection_equipment_items
-  - action: action_answer_view_protection_equipment_items
-
