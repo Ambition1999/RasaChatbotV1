@@ -2,105 +2,75 @@ version: "2.0"
 
 stories:
 
-#- story: happy path
-#  steps:
-#  - intent: greet
-#  - action: utter_greet
-#  - intent: mood_great
-#  - action: utter_happy
-#
-#- story: sad path 1
-#  steps:
-#  - intent: greet
-#  - action: utter_greet
-#  - intent: mood_unhappy
-#  - action: utter_cheer_up
-#  - action: utter_did_that_help
-#  - intent: affirm
-#  - action: utter_happy
-#
-#- story: sad path 2
-#  steps:
-#  - intent: greet
-#  - action: utter_greet
-#  - intent: mood_unhappy
-#  - action: utter_cheer_up
-#  - action: utter_did_that_help
-#  - intent: deny
-#  - action: utter_goodbye
 
 - story: greeting
   steps:
   - intent: greet
-  - action: utter_greet
+  - action: action_opening_message
   - intent: mood_great
   - action: utter_happy
-
-- story: goodbyeee
-  steps:
-  - intent: goodbye
-  - action: utter_goodbye
-
-- story: bot challengeee
-  steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
-  - intent: ask_ability
-  - action: action_recommend
-  - intent: goodbye
-  - action: utter_goodbye
-
-- story: ask abilityyyyy
-  steps:
-  - intent: ask_ability
-  - action: action_recommend
-
-- story: mood greattttt
-  steps:
-  - intent: mood_great
-  - action: utter_happy
-  - intent: goodbye
-  - action: utter_goodbye
-
-- story: path of list car
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: list_cars
-  - action: action_custom_car
 
 - story: path about time
   steps:
   - intent: greet
-  - action: utter_greet
+  - action: action_opening_message
   - intent: give_time
   - action: action_show_time
 
 - story: path about country
   steps:
   - intent: greet
-  - action: utter_greet
+  - action: action_opening_message
   - intent: give_country
   - action: action_show_country
 
-#- story: language interjection
-#  steps:
-#  - intent: request_csharp
-#  - action: csharp_form
-#  - active_loop: csharp_form
-#  - slot_was_set:
-#    - requested_slot: language
-#  - intent: explain
-#  - action: utter_explain_language
-#  - action: csharp_form
-#
-#- story: application type interjection
-#  steps:
-#  - intent: request_csharp
-#  - action: csharp_form
-#  - active_loop: csharp_form
-#  - slot_was_set:
-#    - requested_slot: application_type
-#  - intent: explain
-#  - action: utter_explain_application_type
-#  - action: csharp_form
+# Type 1
+# get started
+- story: Begining of conversation - Suggest user some questions
+  steps:
+  - intent: ask_about_you
+  - action: action_answer_about_you
+  - checkpoint: check_user_asked_first_question
+
+# ask fire protection question
+- story: Handle user asked fire protection
+  steps:
+  - checkpoint: check_user_asked_first_question
+  - intent: ask_fire_protection
+  - action: action_answer_fire_protection
+  - checkpoint: check_answer_fire_protection
+
+# ask fire protection items
+- story: Handle user asked fire protection equipments
+  steps:
+  - checkpoint: check_answer_fire_protection
+  - intent: ask_fire_safety_and_protection_equipment
+  - action: action_answer_fire_safety_and_protection_equipments
+  - checkpoint: check_answer_fire_protection_equipments
+
+# 3 path to handle show product items.
+- story: Handle user asked fire safety and protection items 01
+  steps:
+  - checkpoint: check_user_asked_first_question
+  - intent: ask_fire_safety_and_protection_equipment_items
+  - action: action_answer_view_protection_equipment_items
+
+- story: Handle user asked fire safety and protection items 02
+  steps:
+  - checkpoint: check_answer_fire_protection
+  - intent: ask_fire_safety_and_protection_equipment_items
+  - action: action_answer_view_protection_equipment_items
+
+- story: Handle user asked fire safety and protection items 03
+  steps:
+  - checkpoint: check_answer_fire_protection_equipments
+  - intent: ask_fire_safety_and_protection_equipment_items
+  - action: action_answer_view_protection_equipment_items
+
+# Path of end conversation
+- story: Goodbye and rating conversation
+  steps:
+  - intent: goodbye
+  - action: action_goodbye
+  - intent: rating_conversation
+  - action: utter_thanks_rating

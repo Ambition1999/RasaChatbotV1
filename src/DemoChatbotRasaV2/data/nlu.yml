@@ -16,11 +16,11 @@ nlu:
     - goodmorning
     - goodevening
     - good afternoon
+    - get started
 
 - intent: goodbye
   examples: |
     - good afternoon
-    - cu
     - good by
     - cee you later
     - good night
@@ -125,11 +125,11 @@ nlu:
 #    - how much does a [Hummer]{"entity":"name","value":"Hummer"} car cost?
 #    - how much does a [Volkswagen]{"entity":"name","value":"Volkswagen"} car cost?
 
-- intent: list_cars
-  examples: |
-    - list of cars
-    - cars price
-    - cars catalog
+#- intent: list_cars
+#  examples: |
+#    - list of cars
+#    - cars price
+#    - cars catalog
 
 - intent: give_time
   examples: |
@@ -267,3 +267,74 @@ nlu:
     - Citroen
     - Hummer
     - Volkswagen
+
+# Intent for ask contact
+
+- intent: ask_contact
+  examples: |
+    - view contact
+    - tell me your contact?
+    - how can i contact with you?
+    - how can i find your website?
+
+# Intent for ask contact
+
+- intent: ask_products
+  examples: |
+    - show me some of products?
+    - What items do you have?
+    - Products catalog
+    - List of products
+    - Give me some products
+    - Give me some items
+    - Tell me about products do you have
+
+- intent: ask_about_you
+  examples: |
+    - What about you?
+    - Tell me about you
+    - Your information
+    - Your profile
+
+# Intent for ask help
+
+- intent: ask_help
+  examples: |
+    - i need help
+    - help me
+    - i need support
+    - support me
+    - help
+    - support
+    - assistance
+
+# Intent for ask Fire Protection
+
+- intent: ask_fire_protection
+  examples: |
+    - fire protection
+    - i want to know fire protection
+
+# Intent for ask Fire Safety and Protection Equipments
+
+- intent: ask_fire_safety_and_protection_equipment
+  examples: |
+    - Protect equipments?
+    - fire safety and protection equipments
+    - what is fire safety and protection equipments
+
+# Intent for ask Fire Safety and Protection Equipment Items
+
+- intent: ask_fire_safety_and_protection_equipment_items
+  examples: |
+    - View protect equipment items
+    - fire safety and protection equipment items
+    - show me fire safety and protection equipment items
+    - view fire safety and protection equipment items
+
+# Intent for ask Fire Safety and Protection Equipment Items
+
+- intent: rating_conversation
+  examples: |
+    - rate conversation
+    - ⭐⭐⭐
