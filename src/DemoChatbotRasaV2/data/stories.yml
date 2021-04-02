@@ -3,33 +3,40 @@ version: "2.0"
 stories:
 
 
-- story: greeting
-  steps:
-  - intent: greet
-  - action: action_opening_message
-  - intent: mood_great
-  - action: utter_happy
-
-- story: path about time
-  steps:
-  - intent: greet
-  - action: action_opening_message
-  - intent: give_time
-  - action: action_show_time
-
-- story: path about country
-  steps:
-  - intent: greet
-  - action: action_opening_message
-  - intent: give_country
-  - action: action_show_country
+#- story: greeting
+#  steps:
+#  - intent: greet
+#  - action: action_opening_message
+#  - intent: mood_great
+#  - action: utter_happy
+#
+#- story: path about time
+#  steps:
+#  - intent: greet
+#  - action: action_opening_message
+#  - intent: give_time
+#  - action: action_show_time
+#
+#- story: path about country
+#  steps:
+#  - intent: greet
+#  - action: action_opening_message
+#  - intent: give_country
+#  - action: action_show_country
 
 # Type 1
+## get started
+#- story: Begining of conversation - Suggest user some questions
+#  steps:
+#  - intent: ask_about_you
+#  - action: action_answer_about_you
+#  - checkpoint: check_user_asked_first_question
+
 # get started
 - story: Begining of conversation - Suggest user some questions
   steps:
-  - intent: ask_about_you
-  - action: action_answer_about_you
+  - intent: greet
+  - action: action_opening_message
   - checkpoint: check_user_asked_first_question
 
 # ask fire protection question
@@ -74,3 +81,31 @@ stories:
   - action: action_goodbye
   - intent: rating_conversation
   - action: utter_thanks_rating
+
+#Path of find product by type
+- story: Suggest idea for user find products
+  steps:
+  - intent: ask_to_find_products
+  - action: action_suggest_idea_search_product
+  - intent: ask_product_types
+  - action: action_suggest_product_types
+  - intent: search_product_types
+  - action: action_answer_product_types
+  - intent: ask_product_details
+  - action: action_view_product_details
+
+
+##Path of find product by type
+#- story: Suggest idea for user find products
+#  steps:
+#  - checkpoint: check_answer_fire_protection_equipments
+#  - intent: ask_to_find_products
+#  - action: action_suggest_idea_search_product
+#  - checkpoint: check_suggest_idea_search_product
+#
+#- story: Suggest idea for user find products by type
+#  steps:
+#  - checkpoint: check_suggest_idea_search_product
+#  - intent: ask_product_types
+#  - action: action_suggest_product_types
+

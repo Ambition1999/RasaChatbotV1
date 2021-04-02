@@ -477,7 +477,7 @@ class ActionOpeningMessage(Action):
             }
         }
         print(message_str)
-        dispatcher.utter_message(text="Hi there! I'm a Fire Assistant")
+        dispatcher.utter_message(text="👋 Hi there! I'm a Fire Assistant ⛑️")
         dispatcher.utter_message(text="I have knowledge about Fire Protection 💥💥💥 and Fire Protection Equipments 🧯🧯🧯")
         dispatcher.utter_message(text="How can I help you?", json_message=message_str)
         return []
@@ -555,6 +555,11 @@ class ActionAskFireSafetyAndProtectionEquipments(Action):
                     "content_type": "text",
                     "title": "View product items",
                     "payload": '/ask_fire_safety_and_protection_equipment_items'
+                },
+                {
+                    "content_type": "text",
+                    "title": "Search product 🔎",
+                    "payload": '/ask_to_find_products'
                 }
             ]
 
@@ -574,7 +579,7 @@ class ActionAskViewProtectionEquipmentItems(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        cnxn_sqlserver = '''SELECT * from Products'''
+        cnxn_sqlserver = '''SELECT TOP 10 * from Products'''
         cursor_sqlserver.execute(cnxn_sqlserver)
         record = cursor_sqlserver.fetchall()
         print(record)
@@ -603,10 +608,11 @@ class ActionAskViewProtectionEquipmentItems(Action):
         # Add product into template items
         template_items = []
         for product in product_list:
+            product_detail = str(product["intro"]) + " - " + str(product["price"]) + "$"
             template_item = {
                 "title": product["name"],
                 "image_url": product["img_url"],
-                "subtitle": product["intro"] + "-" + str(product["price"]) + "$",
+                "subtitle": product_detail,
                 "default_action": {
                     "type": "web_url",
                     "url": product["link"],
@@ -614,9 +620,9 @@ class ActionAskViewProtectionEquipmentItems(Action):
                 },
                 "buttons": [
                     {
-                        "type": "web_url",
-                        "url": product["link"],
-                        "title": "View details"
+                        "type": "postback",
+                        "title": "View details",
+                        "payload": ""
                     },
                     {
                         "type": "web_url",
@@ -685,5 +691,386 @@ class ActionGoodbye(Action):
         dispatcher.utter_message(json_message=message)
 
         return []
+
+
+# Action to suggest idea for user to search product
+class ActionSuggestProductTypes(Action):
+
+    def name(self) -> Text:
+        return "action_suggest_idea_search_product"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        button_find_product_by_type = {
+            "type": "postback",
+            "title": "Find product by type",
+            "payload": '/ask_product_types'
+        }
+
+        button_find_product_by_brand = {
+            "type": "postback",
+            "title": "👉 Find product by brand",
+            "payload": '/ask_product_types'
+        }
+
+        button_find_product_by_property = {
+            "type": "postback",
+            "title": "I have some info about that product",
+            "payload": '/ask_product_types'
+        }
+
+        button_find_ect = {
+            "type": "postback",
+            "title": "Something else",
+            "payload": '/ask_product_types'
+        }
+
+        #icon: 👉    🤔
+
+        # message = {
+        #     "text": """Want to search some Fire Protection Equipments?\n
+        #     Can you tell me exactly what you're looking for? 🔎""",
+        #     "quick_replies": [
+        #         {
+        #             "content_type": "text",
+        #             "title": "Find by Type",
+        #             "payload": '/ask_product_types'
+        #         },
+        #         # {
+        #         #     "content_type": "text",
+        #         #     "title": "By Brand",
+        #         #     "payload": '/ask_fire_safety_and_protection_equipment_items'
+        #         # },
+        #         {
+        #             "content_type": "text",
+        #             "title": "Find by Product",
+        #             "payload": '/ask_fire_safety_and_protection_equipment_items'
+        #         }
+        #
+        #     ]
+        #
+        # }
+
+        message = "Can you tell me exactly what you're looking for? 🔎"
+        dispatcher.utter_message(text="Want to search some Fire Protection Equipments?")
+        dispatcher.utter_message(text=message, buttons=[button_find_product_by_type,
+                                                        button_find_product_by_property,
+                                                        button_find_ect])
+
+        return []
+
+
+# Action to suggest top 10 product type for user (Quick Reply)
+class ActionSuggestProductTypes(Action):
+
+    def name(self) -> Text:
+        return "action_suggest_product_types"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        cnxn_sqlserver = '''SELECT TOP 10 * from ProductTypes''' # Querry SQL Server
+        cursor_sqlserver.execute(cnxn_sqlserver)
+        record = cursor_sqlserver.fetchall()
+        print(record) # Shou
+
+        # Add top 10 product types into product type list
+        product_type_list = []
+        for result in record:
+            id = result[0]
+            name = result[1]
+            des = result[2]
+            # img_url = img_url[3]
+            product_types = {
+                "id": id,
+                "name": str(name).replace("\r\n", ""),
+                "intro": des,
+                # "img_url": img_url, #Null value is not acceptable
+            }
+            print("Element of product type is: ", product_types["name"])
+            product_type_list.append(product_types)
+
+        # Add product into template items
+        quick_replies = []
+        for product_types in product_type_list:
+            product_type_name = str(product_types["name"]).replace("\r\n", "")
+            quick_reply = {
+                "content_type": "text",
+                "title": product_type_name,
+                "payload": '/search_product_types{{"product_type": "{}"}}'.format(product_type_name),
+                #"payload": ' product_types["name"]',
+            }
+            print('==> /search_product_types{{"product_type": {}}}'.format(product_types["name"]))
+            print('==> quick reply is: ', quick_reply)
+            quick_replies.append(quick_reply)
+
+        message = {
+            "text": "Great! Choose or write the types of products you have in mind. 😉"
+                    "\nHere is some types of products.👇👇👇",
+            "quick_replies": quick_replies
+
+        }
+        dispatcher.utter_message(json_message=message)
+
+        return []
+
+
+class ActionAskSearchProductType(Action):
+
+    def name(self) -> Text:
+        return "action_answer_product_types"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        cnxn_sqlserver = '''SELECT * from ProductTypes'''
+        cursor_sqlserver.execute(cnxn_sqlserver)
+        record = cursor_sqlserver.fetchall()
+        print(record)
+
+        # Add product into product list
+        product_type_list = []
+        product_list = []
+        for result in record:
+            id = result[0]
+            name = result[1]
+            des = result[2]
+            # img_url = result[2]
+            product_type = {
+                "id": id,
+                "name": str(name).replace("\r\n", ""),
+                "intro": des
+            }
+            product_type_list.append(product_type)
+        #user_message = tracker.latest_message['text']
+        user_message = tracker.get_slot("product_type")
+        print("user message is: ", user_message)
+        if product_type_list is not None and user_message is not None:
+            list_type_match = validate_intent(product_type_list, user_message)
+            print("list type match is: ", list_type_match)
+            if list_type_match is not None:
+                if len(list_type_match) == 1: # if match 1 => show 10 item of this type
+                    product_type_id = list_type_match[0]["id"]
+                    product_type_name = list_type_match[0]["name"]
+                    print("Product type id is: ", product_type_id)
+                    cnxn_sqlserver = "SELECT TOP 10 * from Products WHERE ProductTypeId = '{}'".format(product_type_id)
+                    cursor_sqlserver.execute(cnxn_sqlserver)
+                    product_record = cursor_sqlserver.fetchall()
+                    print("==>Product record is: ", product_record)
+                    print("==>Len of product record is: ", len(product_record))
+                    if len(product_record) > 0: # if have product for this product type
+                        for result in product_record:
+                            id = result[0]
+                            name = result[1]
+                            des = result[3]
+                            img_url = result[2]
+                            link = result[4]
+                            price = result[5]
+                            type_id = result[6]
+                            product = {
+                                "id": id,
+                                "name": name,
+                                "intro": des,
+                                "img_url": img_url,
+                                "link": link,
+                                "price": price,
+                                "type_id": type_id
+                            }
+                            product_list.append(product)
+
+                        # Add product into template items
+                        template_items = []
+                        for product in product_list:
+                            product_detail = str(product["intro"]) + " - " + str(product["price"]) + "$"
+                            template_item = {
+                                "title": product["name"],
+                                "image_url": product["img_url"],
+                                "subtitle": product_detail,
+                                "default_action": {
+                                    "type": "web_url",
+                                    "url": product["link"],
+                                    "webview_height_ratio": "full"
+                                },
+                                "buttons": [
+                                    {
+                                        "type": "postback",
+                                        "title": "View details",
+                                        # "payload": '/ask_product_details{{"product_type": "{}",'
+                                        #            '"product_id": "{}",'
+                                        #            '"product_name": "{}",'
+                                        #            '"product_price": "{}",'
+                                        #            '"product_img_url": "{}",'
+                                        #            '"product_link": "{}",'
+                                        #            '"product_describe": "{}"}}'.format(product_type_name,
+                                        #                                                product["id"],
+                                        #                                                product["name"],
+                                        #                                                product["price"],
+                                        #                                                product["img_url"],
+                                        #                                                product["link"],
+                                        #                                                product["intro"])
+                                        "payload": '/ask_product_details{{"product_type": "{}","product_id": "{}","product_name": "{}","product_price": "{}","product_img_url": "{}","product_link": "{}","product_describe": "{}"}}'.format(product_type_name,
+                                                                                       product["id"],
+                                                                                       product["name"],
+                                                                                       product["price"],
+                                                                                       product["img_url"],
+                                                                                       product["link"],
+                                                                                       product["intro"])
+                                    },
+                                    {
+                                        "type": "web_url",
+                                        "url": product["link"],
+                                        "title": "Shop now"
+                                    }
+                                ]
+                            }
+                            # payloaddd = '/ask_product_details{{"product_type": "{}","product_id": "{}","product_name": "{}","product_price": "{}","product_img_url": "{}","product_link": "{}","product_describe": "{}"}}'.format(product_type_name,
+                            #                                                            product["id"],
+                            #                                                            product["name"],
+                            #                                                            product["price"],
+                            #                                                            product["img_url"],
+                            #                                                            product["link"],
+                            #                                                            product["intro"])
+                            # print("==> Payload is: ", payloaddd)
+                            template_items.append(template_item)
+
+                        message_str = {
+                            "attachment": {
+                                "type": "template",
+                                "payload": {
+                                    "template_type": "generic",
+                                    "elements": template_items
+                                }
+                            }
+                        }
+
+                        ret_text = "Bingo!!! Here are some products of the '{}' category: ".format(product_type_name)
+                        print(message_str)
+                        dispatcher.utter_message(text=ret_text, json_message=message_str)
+                        return []
+                    else: # if have no product for this product_type
+                        # Add product into template items (quick reply)
+                        quick_replies = []
+                        for product_types in product_type_list:
+                            quick_reply = {
+                                "content_type": "text",
+                                "title": product_types["name"],
+                                "payload": '/search_product_types{{"product_type": "{}"}}'.format(product_types["name"])
+                                # "payload": ' product_types["name"]',
+                            }
+                            quick_replies.append(quick_reply)
+
+                        message = {
+                            "text": "Please try again!"
+                                    "\nChoose or write the types of products you have in mind. 😉"
+                                    "\nHere is some types of products.👇👇👇",
+                            "quick_replies": quick_replies
+
+                        }
+
+                        no_product_found_message = "Oops! There are no products in '{}' category...".format(product_type_name)
+                        no_product_found_img = "https://www.queencows.com/media/wysiwyg/page-no-product.png"
+                        #try_again_message = "Try to search another products? 🔎"
+                        dispatcher.utter_message(text=no_product_found_message)
+                        dispatcher.utter_message(img=no_product_found_img)
+                        dispatcher.utter_message(json_message=message)
+                        return []
+
+                else: # if match >1 => user need confirm 1 of suggest idea.
+
+                    # Add product into template items
+                    quick_replies = []
+
+                    for product_types in list_type_match:
+                        quick_reply = {
+                            "content_type": "text",
+                            "title": product_types["name"],
+                            "payload": '/ask_fire_safety_and_protection_equipment_items'
+                        }
+                        quick_replies.append(quick_reply)
+
+                    message = {
+                        "text": "Great! I have several product categories that match your keywords as below. 👇👇👇",
+                        "quick_replies": quick_replies
+
+                    }
+                    dispatcher.utter_message(json_message=message)
+
+                    return []
+
+        else:
+            # Add product into template items (quick reply)
+            quick_replies = []
+            for product_types in product_type_list:
+                quick_reply = {
+                    "content_type": "text",
+                    "title": product_types["name"],
+                    "payload": '/search_product_types{{"product_type": "{}"}}'.format(product_types["name"])
+                    # "payload": ' product_types["name"]',
+                }
+                quick_replies.append(quick_reply)
+
+            message = {
+                "text": "Please try again!"
+                        "\nChoose or write the types of products you have in mind. 😉"
+                        "\nHere is some types of products.👇👇👇",
+                "quick_replies": quick_replies
+
+            }
+            fail_message = "Oops!!! I don't have anything for your search..."  # => There are the list of type product i know redirect to
+            dispatcher.utter_message(text=fail_message)
+            dispatcher.utter_message(json_message=message)
+            return []
+
+
+# This function is check for product type name is match with user message or not
+def validate_intent(list_product_type, user_message):
+    list_type_match = []
+    for item_type in list_product_type:
+        if item_type["name"] in user_message:
+            list_type_match.append(item_type)
+    return list_type_match
+
+
+class ActionViewProductDetail(Action):
+
+    def name(self) -> Text:
+        return "action_view_product_details"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # Get product info from slot
+        entity_product = {
+            "product_type": tracker.get_slot("product_type"),
+            "product_name": tracker.get_slot("product_name"),
+            "product_price": tracker.get_slot("product_price"),
+            # "product_brand": tracker.get_slot("product_brand"),
+            # "product_quantity": tracker.get_slot("product_quantity"),
+            "product_img_url": tracker.get_slot("product_img_url"),
+            "product_link": tracker.get_slot("product_link"),
+            "product_describe": tracker.get_slot("product_describe")
+        }
+
+        # structure name, image, type, price, describe
+        introduce_message = "Yup! Information of products: "
+        product_name_message = "👉 Name: {}".format(entity_product["product_name"])
+        product_img_message = entity_product["product_img_url"]
+        product_detail_message = """👉 Type: {}
+👉 Price: {} $
+👉 Describe: {}
+        """.format(entity_product["product_type"], entity_product["product_price"], entity_product["product_describe"])
+        dispatcher.utter_message(text=introduce_message)
+        dispatcher.utter_message(text=product_name_message)
+        dispatcher.utter_message(image=product_img_message)
+        dispatcher.utter_message(text=product_detail_message)
+
+        return[]
+
+
 
 # icon ☎️📸 🤔🤔🤔

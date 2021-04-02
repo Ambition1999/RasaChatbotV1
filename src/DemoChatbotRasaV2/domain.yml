@@ -80,6 +80,14 @@ intents:
     use_entities: true
 - rating_conversation:
     use_entities: true
+- ask_to_find_products:
+    use_entities: true
+- ask_product_types:
+    use_entities: true
+- search_product_types:
+    use_entities: true
+- ask_product_details:
+    use_entities: true
 entities:
 - language
 - application_type
@@ -87,7 +95,17 @@ entities:
 - first_name
 - last_name
 - full_name
+# entities products
 - phone_number
+- product_id
+- product_name
+- product_type
+- product_price
+- product_brand
+- product_quantity
+- product_img_url
+- product_link
+- product_describe
 slots:
   language:
     type: rasa.shared.core.slots.TextSlot
@@ -133,6 +151,52 @@ slots:
     auto_fill: true
     influence_conversation: true
     values: []
+  # product form slots
+  product_id:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  product_name:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  product_type:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  product_brand:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  product_price:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  product_quantity:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  product_img_url:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  product_link:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  product_describe:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
 responses:
   utter_greet:
   - text: Hey! How are you?
@@ -235,19 +299,23 @@ actions:
 - action_answer_contact
 - action_answer_products
 - action_answer_help
-- action_answer_about_you
+#- action_answer_about_you
 - action_opening_message
 - action_answer_fire_protection
 - action_answer_fire_safety_and_protection_equipments
 - action_answer_view_protection_equipment_items
 - action_goodbye
+- action_suggest_idea_search_product
+- action_suggest_product_types
+- action_answer_product_types
+- action_view_product_details
 forms:
   csharp_form:
-    application_type:
-    - entity: application_type
-      type: from_entity
     language:
     - entity: language
+      type: from_entity
+    application_type:
+    - entity: application_type
       type: from_entity
     learning_time:
     - entity: learning_time
@@ -263,5 +331,33 @@ forms:
       type: from_entity
     phone_number:
     - entity: phone_number
+      type: from_entity
+  product_form:
+    product_id:
+    - entity: product_id
+      type: from_entity
+    product_name:
+    - entity: product_name
+      type: from_entity
+    product_type:
+    - entity: product_type
+      type: from_entity
+    product_brand:
+    - entity: product_brand
+      type: from_entity
+    product_price:
+    - entity: product_price
+      type: from_entity
+    product_quantity:
+    - entity: product_quantity
+      type: from_entity
+    product_img_url:
+    - entity: product_img_url
+      type: from_entity
+    product_link:
+    - entity: product_link
+      type: from_entity
+    product_describe:
+    - entity: product_describe
       type: from_entity
 e2e_actions: []

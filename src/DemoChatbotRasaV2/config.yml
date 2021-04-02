@@ -10,7 +10,6 @@ pipeline:
    - name: RegexFeaturizer
    - name: LexicalSyntacticFeaturizer
    - name: CountVectorsFeaturizer
-   - name: CountVectorsFeaturizer
      analyzer: char_wb
      min_ngram: 1
      max_ngram: 4
@@ -69,7 +68,7 @@ policies:
 # # See https://rasa.com/docs/rasa/policies for more information.
    - name: MemoizationPolicy
    - name: TEDPolicy
-     max_history: 5
+     max_history: 10
      epochs: 150
      constrain_similarities: true
    - name: RulePolicy

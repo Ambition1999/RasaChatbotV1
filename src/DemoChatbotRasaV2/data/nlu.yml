@@ -338,3 +338,51 @@ nlu:
   examples: |
     - rate conversation
     - ⭐⭐⭐
+
+# Intent for find product
+
+- intent: ask_to_find_products
+  examples: |
+    - find products
+    - find items
+    - find yield
+    - i want to find some products
+    - i want to find product
+    - looking for some products
+    - looking for products
+    - looking for items
+    - looking for yield
+    - i'm looking for some products
+    - i am looking for some products
+    - i'm looking for some items
+    - i'm looking for some yield
+    - search products
+    - search items
+    - search yield
+    - i'm searching for some products
+    - i'm searching for some items
+    - i'm searching for some yield
+
+
+# Intent for suggest product type
+
+- intent: ask_product_types
+  examples: |
+    - find product type
+    - product types
+    - product type
+
+
+# Intent for search product type
+
+- intent: search_product_types
+  examples: |
+    - Escapse Ladder
+    - Fire-barrier/FireStops
+
+# Intent for ask product details
+
+- intent: ask_product_details
+  examples: |
+    - View details
+    - View products details
